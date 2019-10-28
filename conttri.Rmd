@@ -13,9 +13,15 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
+
 ```{r cars}
-library(ggplot2)
+library(tidyverse)
+library(datasets)
 data(iris)
+library(ggplot2)
+```
+```{r}
+iris=as.data.frame(lapply(iris, function(cc) cc[ sample(c(TRUE, NA), prob = c(0.95, 0.05), size = length(cc), replace = TRUE) ]))
 ```
 
 ## Including Plots
@@ -25,5 +31,57 @@ You can also embed plots, for example:
 ```{r pressure, echo=FALSE}
 head(iris)
 ```
+```{r}
+sample(iris,5)
+```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+5.Missing Values and NA.
+
+Sometime there are missing values or NA in our dataset. It can be caused by a number of reasons such as observations that were not recorded and data corruption. Or it can be left as NA on purpose to indicate something. The important thing is how to find the missing values in our dataset.
+
+In this block we will introduce several functions to find the missing values
+
+```{r}
+#Missing values by columns
+colSums(is.na(iris))  %>%
+  sort(decreasing=TRUE)
+
+
+#Missing values by row
+rowSums(is.na(iris))  %>%
+  sort(decreasing=TRUE)
+```
+
+```{r}
+#use heatmap
+
+tidyiris <- iris %>%
+  rownames_to_column("id") %>%
+  gather(key, value, -id) %>%
+  mutate(missing = ifelse(is.na(value), "yes", "no"))
+
+ggplot(tidyiris, aes(x = key, y = fct_rev(id), fill = missing)) +
+  geom_tile(color = "white") +
+  ggtitle("iris with NAs added") +
+  scale_fill_viridis_d() + # discrete scale
+  theme_bw()
+```
+```{r}
+#install.packages("mi")
+library(mi)
+x <- missing_data.frame(iris)
+image(x)
+```
+```{r}
+install.packages("visna")
+
+```
+
+
+8.Visualizing and Looking for Correlations  
+For our numeric data, it is important to find the correlations between variables, since provides us extra information about the dataset.
+```{r}
+library(GGally)
+ggpairs(iris[1:4])
+```
+
