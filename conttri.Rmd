@@ -76,6 +76,21 @@ image(x)
 install.packages("visna")
 
 ```
+7.Find the outlier for numeric values
+Here we find the outliers in each columns.
+```{r}
+library(ggplot2)
+```
+
+```{r}
+tidyiris <- iris[1:4] %>%
+  rownames_to_column("id") %>%
+  gather(key, value, -id) 
+
+ggplot(data=tidyiris)+
+  geom_boxplot(mapping=aes(x=key,y=value))
+
+```
 
 
 8.Visualizing and Looking for Correlations  
