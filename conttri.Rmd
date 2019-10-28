@@ -13,7 +13,6 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-
 ```{r cars}
 library(tidyverse)
 library(datasets)
@@ -26,9 +25,19 @@ iris=as.data.frame(lapply(iris, function(cc) cc[ sample(c(TRUE, NA), prob = c(0.
 
 ## A glimpse at the dataset
 
-### How does the data like? Take a sample.
+### How does the data look like?
 
-How does the data like? Just take a sample of it.
+When you come across a new dataset, you may ask: How does the dataset look like?
+
+"To see is to know. Not to see is to guess." To answer this question, you just need to view its content.
+
+```{r}
+View(iris)
+```
+
+`View` works not only in RStudio, but also in R terminal on Windows.
+
+Though, when the dataset is huge, you would not really like to open and view the entire dataset. Then what? Just take a sample of it.
 
 The first function that comes to your mind? `head`!
 
@@ -48,14 +57,36 @@ head(iris,3)
 tail(iris,2)
 ```
 
-As you can see, we only see the flowers of species "setosa" here.
+As you can see, we get only the flowers of species "setosa" with `head` and of "virginica" with `tail`. That's because the original dataset is ordered by the "Species", and its head and tail are homogeneous.
+
+What if we want to get a heterogeneous view? You may use `sample_n` instead. It selects random rosw from a table for you.
 
 ```{r}
 library(dplyr)
 sample_n(iris, 5)
 ```
 
+When you want to take a glimpse at a huge dataset, it's fairly better choice to use `sample_n`. However, unlike `head`, `tail` or `View`, it doesn't work on vector or types other than data frame. Also, you have to library `dplyr` to use `sample_n`, while other 3 functions come in `baser`.
+
 ### Retrive the metadata
+
+For a data frame, one of the first property we want to learn about it would be its size.
+
+```{r}
+dim(iris)
+```
+
+The first value in the result is the number of observations and the second is of variables.
+
+Sometimes we don't really want to know the details of a dataset. We simply need a summary.
+
+```{r}
+summary(iris)
+```
+
+When used on a data frame, `summary` gives you the metadata of the dataset. That is, the summaries for each vairable in it. For numerical column, you will see the percentiles and mean. For categorical ones, you can get the frequency of each factors.
+
+A simpler alternative is `str`. Note that `str` here is not an abbreviation for "string", but for "structure". `str` "compactly displays the structure of an arbitrary R object", according to the document. As for data frame, it displays the data type and first few values of each columns.
 
 ```{r}
 str(iris)
@@ -71,8 +102,30 @@ str(iris)
 
 ### Understand a categorical variable
 
+You may learn about the frequency about a categorical column in a data frame using `summary`.
 
-## Dataset patterns
+```{r}
+summary(iris$Species)
+```
+
+Though, it doesn't work when the column is presented not as a factor, but as characters.
+
+```{r}
+iris$Characters <- as.character(iris$Species)
+summary(iris$Characters)
+```
+
+Under such circumstances, we may use `unique` and `table` instead. `unique` tells you about all the unique values in a vector, and `table` shows their frequency.
+
+```{r}
+unique(iris$Characters)
+```
+
+```{r}
+table(iris$Characters)
+```
+
+## Advanced patterns about a data set
 
 ### Locate the missing values
 
