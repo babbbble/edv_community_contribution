@@ -7,7 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Intro
+## Introduction
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
@@ -24,16 +24,57 @@ library(ggplot2)
 iris=as.data.frame(lapply(iris, function(cc) cc[ sample(c(TRUE, NA), prob = c(0.95, 0.05), size = length(cc), replace = TRUE) ]))
 ```
 
-## I
+## A glimpse at the dataset
 
-You can also embed plots, for example:
+### How does the data like? Take a sample.
+
+How does the data like? Just take a sample of it.
+
+The first function that comes to your mind? `head`!
 
 ```{r pressure, echo=FALSE}
 head(iris)
 ```
+
+`head` returns the first 5 rows of a data frame by default. You can also specify how many rows you want.
+
 ```{r}
-sample(iris,5)
+head(iris,3)
 ```
+
+`tail` is similar to it, but it retrives the rows from the bottom.
+
+```{r}
+tail(iris,2)
+```
+
+As you can see, we only see the flowers of species "setosa" here.
+
+```{r}
+library(dplyr)
+sample_n(iris, 5)
+```
+
+### Retrive the metadata
+
+```{r}
+str(iris)
+```
+
+## Dive into one column
+
+### Summarise a numerical variable
+
+```summarise```
+
+```outliers```
+
+### Understand a categorical variable
+
+
+## Dataset patterns
+
+### Locate the missing values
 
 5.Missing Values and NA.
 
@@ -68,7 +109,7 @@ ggplot(tidyiris, aes(x = key, y = fct_rev(id), fill = missing)) +
 ```
 ```{r}
 #install.packages("mi")
-library(mi)
+
 x <- missing_data.frame(iris)
 image(x)
 ```
@@ -92,6 +133,7 @@ ggplot(data=tidyiris)+
 
 ```
 
+### Find out the correlations among variables
 
 8.Visualizing and Looking for Correlations  
 For our numeric data, it is important to find the correlations between variables, since it provides us extra information about the dataset.
