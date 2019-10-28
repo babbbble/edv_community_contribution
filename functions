@@ -1,13 +1,20 @@
 View some sample data:
 1. head tail
 2. sampe_n 
+3. View
+
+Meta info:
+4. str 
+
+Missing values:
+5. na or missing values
+
+-- arrange
+
+Summarise numeric column:
+6. summarise
+7. outlier 
 
 
-arrange 
-summarise 
-na or missing values
-outlier 
-View
-
-
+Correlation between columns:
 8. Visualizing Looking for Correlations  
