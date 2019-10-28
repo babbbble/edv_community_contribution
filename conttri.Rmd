@@ -96,8 +96,28 @@ str(iris)
 
 ### Summarise a numerical variable
 
-```summarise```
+If you would like to examine some columns more thoroughly, you can use `summarise` to customize your summary. It takes the data frame as the first parameter. Name-value pairs of summary functions are followed, indicating the output titles and content.
 
+Available summary functions are as followed:
+
+- Center: mean(), median()
+
+- Spread: sd(), IQR(), mad()
+
+- Range: min(), max(), quantile()
+
+- Position: first(), last(), nth(),
+
+- Count: n(), n_distinct()
+
+- Logical: any(), all()
+
+```{r}
+library(dplyr)
+iris %>% 
+    summarize(mean.1 = mean(Petal.Length, na.rm=TRUE), sd.1 = sd(Petal.Length, na.rm=TRUE),
+              mean.2 = mean(Sepal.Length, na.rm=TRUE), sd.2 = sd(Sepal.Length, na.rm=TRUE))
+```
 ```outliers```
 
 ### Understand a categorical variable
