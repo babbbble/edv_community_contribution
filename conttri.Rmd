@@ -79,7 +79,7 @@ install.packages("visna")
 
 
 8.Visualizing and Looking for Correlations  
-For our numeric data, it is important to find the correlations between variables, since provides us extra information about the dataset.
+For our numeric data, it is important to find the correlations between variables, since it provides us extra information about the dataset.
 ```{r}
 library(GGally)
 ggpairs(iris[1:4])
