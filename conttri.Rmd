@@ -149,7 +149,6 @@ table(iris$Characters)
 
 ### Locate the missing values
 
-5.Missing Values and NA.
 
 Sometime there are missing values or NA in our dataset. It can be caused by a number of reasons such as observations that were not recorded and data corruption. Or it can be left as NA on purpose to indicate something. The important thing is how to find the missing values in our dataset.
 
@@ -159,8 +158,8 @@ In this block we will introduce several functions to find the missing values
 #Missing values by columns
 colSums(is.na(iris))  %>%
   sort(decreasing=TRUE)
-
-
+```
+```{r}
 #Missing values by row
 rowSums(is.na(iris))  %>%
   sort(decreasing=TRUE)
@@ -168,6 +167,7 @@ rowSums(is.na(iris))  %>%
 
 ```{r}
 #use heatmap
+library(ggplot2)
 
 tidyiris <- iris %>%
   rownames_to_column("id") %>%
@@ -182,20 +182,16 @@ ggplot(tidyiris, aes(x = key, y = fct_rev(id), fill = missing)) +
 ```
 ```{r}
 #install.packages("mi")
-
+library(mi)
 x <- missing_data.frame(iris)
 image(x)
 ```
-```{r}
-install.packages("visna")
 
+###Find the outlier for numeric values
 
-```
-7.Find the outlier for numeric values
+An outlier may be due to variability in the measurement or it may indicate experimental error; the latter are sometimes excluded from the data set.[3] An outlier can cause serious problems in statistical analyses.
 Here we find the outliers in each columns.
-```{r}
-library(ggplot2)
-```
+
 
 ```{r}
 tidyiris <- iris[1:4] %>%
@@ -206,6 +202,8 @@ ggplot(data=tidyiris)+
   geom_boxplot(mapping=aes(x=key,y=value))
 
 ```
+Thus we can see that there are 4 outliers in Sepal.Width variable.
+
 
 ### Find out the correlations among variables
 
