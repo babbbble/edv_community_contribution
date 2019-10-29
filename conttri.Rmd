@@ -116,6 +116,7 @@ image(x)
 ```{r}
 install.packages("visna")
 
+
 ```
 7.Find the outlier for numeric values
 Here we find the outliers in each columns.
